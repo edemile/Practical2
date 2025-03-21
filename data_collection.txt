@@ -1,0 +1,34 @@
+
+REDIS TIMER AND MEMORY
+
+MODEL = MiniLM
+
+Redis index 'ds4300_vector_index' created for model: MiniLM (dim=384)
+Before indexing Redis memory usage: 3.76 MB
+Inserted embeddings from embedded_files/MiniLM_embedded.npy
+redis_indexing_MiniLM took 0.2322s
+After indexing Redis memory usage: 5.55 MB
+
+Total memory increase from indexing: 1.79 MB
+
+
+MODEL = MPNet
+
+Redis index 'ds4300_vector_index' created for model: MPNet (dim=768)
+Before indexing Redis memory usage: 3.77 MB
+Inserted embeddings from embedded_files/MPNet_embedded.npy
+redis_indexing_MPNet took 0.3612s
+After indexing Redis memory usage: 7.77 MB
+
+Total memory increase from indexing: 4.00 MB
+
+
+MODEL = InstructorXL
+
+Redis index 'ds4300_vector_index' created for model: InstructorXL (dim=768)
+Before indexing Redis memory usage: 5.31 MB
+Inserted embeddings from embedded_files/InstructorXL_embedded.npy
+redis_indexing_InstructorXL took 0.3654s
+After indexing Redis memory usage: 7.76 MB
+
+Total memory increase from indexing: 2.45 MB
