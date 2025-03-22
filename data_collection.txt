@@ -32,3 +32,30 @@ redis_indexing_InstructorXL took 0.3654s
 After indexing Redis memory usage: 7.76 MB
 
 Total memory increase from indexing: 2.45 MB
+
+CHROMA TIMER AND MEMORY
+
+MODEL = MINILM
+
+Before indexing Python memory usage: 100.27 MB
+Inserted 483 embeddings from embedded_files/MiniLM_embedded.npy
+chroma_indexing_MiniLM took 0.1654s
+After indexing Python memory usage: 115.86 MB
+
+Memory increase from indexing: 15.59 MB
+
+MODEL = MPNet
+
+Before indexing Python memory usage: 101.66 MB
+Inserted 483 embeddings from embedded_files/MPNet_embedded.npy
+chroma_indexing_MPNet took 0.2165s
+After indexing Python memory usage: 124.64 MB
+
+Memory increase from indexing: 22.98 MB
+
+MODEL = InstuctorXL
+
+chroma_indexing_InstructorXL took 0.2012s
+After indexing Python memory usage: 124.55 MB
+
+Memory increase from indexing: 23.34 MB
