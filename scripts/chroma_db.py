@@ -6,8 +6,8 @@ import time
 from timer import timer
 import psutil
 
-#embedding model
-MODEL_NAME = "MiniLM"  # "MiniLM", "MPNet", "InstructorXL"
+#embedding models = "MiniLM", "MPNet", "InstructorXL"
+MODEL_NAME = "MiniLM"  
 
 #adjust dimensions based on embedding model
 VECTOR_DIM = {
