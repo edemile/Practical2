@@ -47,7 +47,7 @@ def build_prompt(query: str, context: str) -> str:
     """
     return f"""Answer the question using only context related to the query below.\n\nContext:\n{context}\n\nQuestion: {query}\nAnswer:"""
 
-#change LLM model to Mistral/ Llama 2
+#change LLM model to Mistral/ Llama 3.2
 def generate_response(query: str, model: str = "llama3.2") -> str:
     """
     Pipeline: embed query, retrieve context, ask LLM
