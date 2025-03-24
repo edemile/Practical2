@@ -5,7 +5,7 @@ import time
 from chroma_db import search_similar 
 
 # models = "MiniLM", "MPNet", "InstructorXL"
-EMBEDDING_MODEL_NAME = "MiniLM"
+EMBEDDING_MODEL_NAME = "InstructorXL"
 
 EMBEDDING_MODELS = {
     "MiniLM": {
@@ -38,7 +38,7 @@ def build_prompt(query: str, context: str) -> str:
     return f"""Answer the question using only context related to the query below.\n\nContext:\n{context}\n\nQuestion: {query}\nAnswer:"""
 
 #change LLMs llama3.2 and mistral
-def generate_response(query: str, model: str = "llama3.2") -> str:
+def generate_response(query: str, model: str = "mistral") -> str:
     query_vec = embed_query(query)
     results = search_similar(query_vec, k=5)
     context = format_context(results)

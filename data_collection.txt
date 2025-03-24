@@ -33,6 +33,10 @@ After indexing Redis memory usage: 7.76 MB
 
 Total memory increase from indexing: 2.45 MB
 
+
+
+
+
 CHROMA TIMER AND MEMORY
 
 MODEL = MINILM
@@ -59,3 +63,449 @@ chroma_indexing_InstructorXL took 0.2012s
 After indexing Python memory usage: 124.55 MB
 
 Memory increase from indexing: 23.34 MB
+
+
+
+FAISS TIMER AND MEMORY
+
+MODEL = MiniLM
+
+Before indexing memory usage: 42.62 MB
+Inserted 483 vectors into FAISS for MiniLM
+FAISS index and metadata saved
+faiss_indexing_MiniLM took 0.0148s
+After indexing memory usage: 45.36 MB
+
+Memory increase from indexing: 2.73 MB
+
+MODEL = MPNet
+
+Before indexing memory usage: 42.62 MB
+Inserted 483 vectors into FAISS for MPNet
+FAISS index and metadata saved
+faiss_indexing_MPNet took 0.0094s
+After indexing memory usage: 47.97 MB
+
+Memory increase from indexing: 5.34 MB
+
+MODEL = InstructorXL
+
+Before indexing memory usage: 42.78 MB
+Inserted 483 vectors into FAISS for InstructorXL
+FAISS index and metadata saved
+faiss_indexing_InstructorXL took 0.0089s
+After indexing memory usage: 48.02 MB
+
+Memory increase from indexing: 5.23 MB
+
+
+
+LLM COMPARISON
+
+LLM = llama3.2
+Embedding Model = MiniLM
+
+Question = Given these numbers: 3, 8, 14, 6, 23, 1, 45, please create a balanced AVL tree.
+
+RESPONSES
+
+
+
+REDIS:
+
+Response (in 16.68 seconds):
+To create a balanced AVL tree from the given numbers [3, 8, 14, 6, 23, 1, 45], we need to perform an LR rotation.
+
+First, let's insert the nodes into the tree in the correct order:
+
+* 3
+* 6 (inserted below 3)
+* 1 (inserted below 3)
+* 8 (inserted below 6)
+* 14 (inserted below 8)
+* 23 (inserted below 14)
+* 45 (inserted below 23)
+
+To create a balanced AVL tree, we need to perform LR rotations on the first two links leading from the root node (3). This will correct the imbalance and rearrange the tree.
+
+After performing the LR rotation, the tree should look like this:
+
+3
+ \
+  6
+   \
+    1
+     \
+      8
+       \
+        14
+         \
+          23
+           \
+            45
+
+This is a balanced AVL tree that meets the balance condition after every operation.
+
+
+
+
+
+CHROMA
+
+chroma_query_MiniLM took 0.0258s
+
+Response (in 26.65 seconds):
+To create a balanced AVL tree from the given numbers, we need to first arrange them in ascending order: 1, 3, 6, 8, 14, 23, 45.
+
+Next, we'll perform an LR rotation on each node with a balance factor of -2 or greater. We'll start at the root node and work our way down the tree.
+
+Here's how the tree would look after the rotations:
+
+1. Root: 6
+   Left child: 3
+     Left child: 1
+   Right child: 8
+     Left child: None
+     Right child: 14
+
+2. Node 3:
+   Balance factor = -(8-3) = -5 > -2 (LR rotation)
+   Root: 3
+     Left child: 6
+       Left child: 1
+     Right child: 8
+       Right child: 14
+
+3. Node 6:
+   Balance factor = -(14-8) = -6 > -2 (LR rotation)
+   Root: 6
+     Left child: 3
+       Left child: 1
+     Right child: 8
+       Right child: 14
+     Left child: None
+
+4. Node 8:
+   Balance factor = -(14-8) = -6 > -2 (LR rotation)
+   Root: 8
+     Left child: 6
+       Left child: 3
+         Left child: 1
+     Right child: 14
+
+5. Node 14:
+   Balance factor = -(23-8) = -15 > -2 (LR rotation)
+   Root: 8
+     Left child: 6
+       Left child: 3
+         Left child: 1
+     Right child: None
+     Left child: 14
+       Right child: 23
+
+However, this tree still has a balance factor greater than -2 at some nodes. To achieve balance, we need to perform additional rotations.
+
+After performing the necessary LR and RR rotations, the final balanced AVL tree can be constructed as follows:
+
+      8
+    /   \
+   6     14
+  / \   / 
+3   1 23
+
+Note that this construction is a bit tricky and might require multiple steps of rotation to achieve balance.
+
+
+
+FAISS
+
+Response (in 23.28 seconds):
+To create a balanced AVL tree from the given numbers, we can start by inserting each number into an empty tree and then perform rotations as necessary to ensure that the tree remains balanced. 
+
+Here are the steps for each number:
+
+1. Insert 3: The tree becomes {3}.
+2. Insert 8: The tree becomes {8}, with a left rotation at node 8.
+3. Insert 14: The tree becomes {8, 14}, with no changes.
+4. Insert 6: The tree becomes {8, 6, 14}. A right rotation is needed at the new root, so we transform it into {6, 8, 14}.
+5. Insert 23: The tree becomes {6, 8, 23, 14}, with a left and a right rotation at nodes 6 and 8 respectively to maintain balance.
+6. Insert 1: The tree becomes {1, 6, 8, 23, 14}. No changes are needed after the first insertion of 3, so no further rotations can correct the imbalance caused by subsequent inserts. So, we transform it into {1, 6, 8, 14, 23}.
+7. Insert 45: The tree becomes {1, 6, 8, 14, 23, 45}, with a left and right rotation at nodes 6 and 8 respectively.
+
+However, upon closer inspection of the current tree structure (1, 6, 8, 14, 23, 45), we can see that the structure is not quite balanced. Therefore, after further examination and application of the necessary rotations to correct this imbalance:
+
+The final tree should be: {1, 3, 6, 8, 14, 23, 45}.
+
+This tree adheres to the balance property for all nodes and remains a valid AVL tree with each insertion or removal operation.
+
+
+
+OPTIMIZING CHROMA:
+
+EMBEDDING MODELS TO COMPARE: MiniLM, MPNet, InstructorXL
+LLMs TO COMPARE:: llama3.2, Mistral
+
+
+
+
+LLAMA3.2
+
+
+
+MiniLM + llama3.2
+
+chroma_query_MiniLM took 0.0258s
+
+Response (in 26.65 seconds):
+To create a balanced AVL tree from the given numbers, we need to first arrange them in ascending order: 1, 3, 6, 8, 14, 23, 45.
+
+Next, we'll perform an LR rotation on each node with a balance factor of -2 or greater. We'll start at the root node and work our way down the tree.
+
+Here's how the tree would look after the rotations:
+
+1. Root: 6
+   Left child: 3
+     Left child: 1
+   Right child: 8
+     Left child: None
+     Right child: 14
+
+2. Node 3:
+   Balance factor = -(8-3) = -5 > -2 (LR rotation)
+   Root: 3
+     Left child: 6
+       Left child: 1
+     Right child: 8
+       Right child: 14
+
+3. Node 6:
+   Balance factor = -(14-8) = -6 > -2 (LR rotation)
+   Root: 6
+     Left child: 3
+       Left child: 1
+     Right child: 8
+       Right child: 14
+     Left child: None
+
+4. Node 8:
+   Balance factor = -(14-8) = -6 > -2 (LR rotation)
+   Root: 8
+     Left child: 6
+       Left child: 3
+         Left child: 1
+     Right child: 14
+
+5. Node 14:
+   Balance factor = -(23-8) = -15 > -2 (LR rotation)
+   Root: 8
+     Left child: 6
+       Left child: 3
+         Left child: 1
+     Right child: None
+     Left child: 14
+       Right child: 23
+
+However, this tree still has a balance factor greater than -2 at some nodes. To achieve balance, we need to perform additional rotations.
+
+After performing the necessary LR and RR rotations, the final balanced AVL tree can be constructed as follows:
+
+      8
+    /   \
+   6     14
+  / \   / 
+3   1 23
+
+Note that this construction is a bit tricky and might require multiple steps of rotation to achieve balance.
+
+
+MPNet + llama3.2
+
+Response (in 18.43 seconds):
+Based on the context, to create a balanced AVL tree from the given numbers (3, 8, 14, 6, 23, 1, 45), we need to ensure that after every insertion or removal of a key, every node in the tree meets the AVL property.
+
+Here's one way to construct such an AVL tree:
+
+1. Start with the root as 45.
+2. Insert 3: The tree becomes 3 -- 45.
+3. Insert 8: The tree becomes 3 -- 45 -- 8.
+4. Insert 6: Since 6 is less than 3, we need to balance the tree. We perform an LR rotation from 3 to ensure the tree remains balanced.
+
+The tree now looks like this:
+
+       3
+      / \
+     1   8
+
+5. Insert 14: The tree becomes 3 -- 1 -- 8 -- 14.
+6. Insert 23: The tree becomes 3 -- 1 -- 8 -- 14 -- 23.
+
+The final balanced AVL tree is:
+ 
+       14
+      / \
+     8   23
+    / \  
+    3   1
+
+
+
+InstructorXL + llama3.2
+
+chroma_query_InstructorXL took 1.0442s
+
+Response (in 48.78 seconds):
+To create a balanced AVL tree from the given numbers, we need to first insert each number into the tree while maintaining the balance property.
+
+Here's the step-by-step process:
+
+1. Insert 3: The tree becomes:
+```
+     3
+    / \
+   1   8
+  /
+ 6
+```
+2. Insert 8: The tree becomes:
+```
+     3
+    / \
+   1   8
+  / \
+ 6   14
+```
+3. Insert 14: The tree becomes:
+```
+     3
+    / \
+   1   8
+  / \   \
+ 6  14 23
+```
+4. Insert 6: The tree remains the same:
+```
+     3
+    / \
+   1   8
+  / \   \
+ 6  14 23
+```
+5. Insert 23: The tree becomes:
+```
+     3
+    / \
+   1   8
+  / \   \
+ 6  14 23
+       /
+      45
+```
+The resulting tree is balanced, and the number of nodes in each perfect shape is:
+
+* 3 nodes: 1 node (root) + 2 child nodes = 3 nodes
+* 5 nodes: 1 root + 4 child nodes (2x2 subtree)
+* 7 nodes: 1 root + 6 child nodes (3x2+1 subtree)
+* 15 nodes: 1 root + 14 child nodes (4x3+2 subtree)
+
+
+
+
+MISTRAL
+
+MiniLM + Mistral
+
+chroma_query_MiniLM took 0.0438s
+
+Response (in 40.63 seconds):
+ To create a balanced AVL tree from the given numbers (3, 8, 14, 6, 23, 1, 45), we would first construct a binary search tree based on the order of these numbers and then perform balancing operations to make it an AVL tree.
+
+The initial binary search tree would look like this:
+```
+     45
+   /    \
+  6      8
+      /  \
+     1    14
+       / \
+      3   23
+```
+
+Now we'll perform Left Rotation on the root, which is 45, because it has a left child (6) with a height difference of two with its sibling (8). The tree after this operation would look like this:
+```
+         8
+       /   \
+      6     45
+      /     /    \
+     1     14      3
+         /        /  \
+        3       23    NULL
+```
+Now we'll perform a Right Rotation on the root, because it violates the AVL property. The new tree after these operations would be:
+```
+          14
+        /     \
+      6         8
+      /   \       \
+     3    1        45
+                    /  \
+                   3   23
+```
+At this point, the tree is nearly balanced and has the AVL property. This process ensures that the height difference between the left and right subtrees of every node is no more than one, making it an AVL tree.
+
+
+
+MPNet + Mistral
+
+chroma_query_MPNet took 0.0348s
+
+Response (in 39.80 seconds):
+ To create a balanced AVL tree from the given numbers (3, 8, 14, 6, 23, 1, 45), we need to follow the principles of an AVL tree and ensure that every node has a difference of height between its left and right subtrees of no more than 1.
+
+First, let's create a binary search tree from the numbers:
+```
+         45
+       /    \
+     16       80
+   /  \
+  3    60
+ /  \   / \
+3   6  23 90
+ \
+ 1
+```
+Now, let's balance this tree by performing rotations as needed. The only violation of the AVL property occurs at node 45. We can perform an LR rotation on it to rearrange the tree:
+
+```
+         80
+       /    \
+     16       90
+   /  \             \
+  3    6           23
+              /
+             1
+```
+Now, our tree is a balanced AVL tree. You can verify this by checking the difference between the height of each node's left and right subtrees. The difference should be no more than 1 at every node.
+
+
+
+
+InstructorXL + Mistral
+
+chroma_query_InstructorXL took 0.4007s
+
+Response (in 71.86 seconds):
+ To create a balanced AVL tree from the given numbers, we would first insert each number as a key into an empty AVL tree following the rules for constructing a binary search tree. Since our goal is to achieve balance, we'll ensure that every time we insert a new node, we perform a rotation (either left or right) if necessary to keep the tree balanced.
+
+Here's how you can build an AVL tree with the given keys:
+
+1. Start with an empty tree (i.e., a single null root node).
+2. Insert key 1, which will be the root node of the tree.
+3. Insert key 3. Since 3 is smaller than the root node, we'll create a left child for the root node and balance factor becomes -1.
+4. Insert key 6. Since 6 is smaller than 3 (left child), we'll create a left child for the node 3 and balance factor becomes 0.
+5. Insert key 8. Since 8 is greater than 6 (right child), we perform a rotation on 6, resulting in a new tree with balanced factors.
+6. Insert key 14. Since 14 is greater than the root node, we'll create a right child for the root node and balance factor becomes 0.
+7. Insert key 15. Since 15 is greater than 14 (right child), we perform a rotation on 14, resulting in a new tree with balanced factors.
+8. Insert key 23. Since 23 is greater than the root node, we'll create a right child for the root node and balance factor becomes 0.
+9. Finally, insert key 45. Since 45 is greater than 23 (right child), we perform a rotation on 23, resulting in a new tree with balanced factors.
+
+The resulting AVL tree will have a height of approximately log(8) = 3. This tree is nearly balanced and can be considered an AVL tree.
