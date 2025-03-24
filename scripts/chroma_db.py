@@ -7,7 +7,7 @@ from timer import timer
 import psutil
 
 #embedding models = "MiniLM", "MPNet", "InstructorXL"
-MODEL_NAME = "InstructorXL"  
+MODEL_NAME = "MPNet"  
 
 #adjust dimensions based on embedding model
 VECTOR_DIM = {

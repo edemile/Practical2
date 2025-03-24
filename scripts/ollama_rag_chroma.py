@@ -5,7 +5,7 @@ import time
 from chroma_db import search_similar 
 
 # models = "MiniLM", "MPNet", "InstructorXL"
-EMBEDDING_MODEL_NAME = "InstructorXL"
+EMBEDDING_MODEL_NAME = "MPNet"
 
 EMBEDDING_MODELS = {
     "MiniLM": {
