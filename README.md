@@ -13,9 +13,9 @@ The goal is to measure indexing time, query time, and overall efficiency to dete
 
 How to Run:
 
-1. Scrape all mecture notes
+1. Scrape all lecture notes
 2. Convert lecture notes to PDFs
-3. Preprocess PDFs using txtcleaning.py
+3. Preprocess PDFs using txtcleaning.py or text_preprocess_flexible.py depending on the cleaning preferences
 4. Run the preprocessed data through each embedding model by running embeddings.py (this runs the preprocessed data through each of the embedding models in one script and saved them to the directory "embedded_files"
 5. Take the embeddings and utilize different vector databases by running the following scripts
    chroma_db.py 
